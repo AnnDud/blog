@@ -4,7 +4,7 @@
 
 <%= render 'errors', model: @article %>
 
-<%= form_for @article do |f| %>
+<%= form_for @article, html: { multipart: true } do |f| %>
   <p>
     <%= f.label :title %><br>
     <%= f.text_field :title %>
@@ -15,6 +15,10 @@
     <%= f.text_area :text %>
   </p>
 
+  <div class='form-group'>
+    <%= f.label :image %><br>
+    <%= f.file_field :image, class: 'form-control' %>
+  </div>
   <p>
     <%= f.submit %>
   </p>

@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
-  http_basic_authenticate_with name: 'admin', password: 'secret11', except: [:index, :show]
-  before_action :provide_article, only: [:show, :destroy, :edit, :update]
+  
+  before_action :provide_article, only: [:show, :destroy, :edit, :update, :add_like]
 
   def index
     if params[:q].present?
@@ -27,7 +27,7 @@ class ArticlesController < ApplicationController
 
   def show
     @comment = Comment.new(commenter: session[:commenter])
-
+    @user_like = @article.likes.find_by(user: current_user)
   end
 
   def destroy
@@ -37,7 +37,11 @@ class ArticlesController < ApplicationController
     redirect_to articles_path
   end
   def edit
- 
+    if @article.user != current_user
+      redirect_to article_path(@article), notice: 'No access'
+    else
+      render 
+    end
   end
   def update
 
@@ -48,9 +52,15 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def add_like
+    @article.likes.create(user: current_user)
+
+    redirect_to article_path(@article)
+  end
+
   private 
   def article_params
-    params.require(:article).permit(:title, :text)
+    params.require(:article).permit(:title, :image, :text)
           .merge(user: current_user)
   end
 
