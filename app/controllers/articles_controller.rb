@@ -3,8 +3,12 @@ class ArticlesController < ApplicationController
   before_action :provide_article, only: [:show, :destroy, :edit, :update]
 
   def index
-    session[:user_id] = 1
-    @articles = Article.all
+    if params[:q].present?
+      @articles = Article.where("? = any(tags)", params[:q])
+    else 
+      @articles = Article.all
+    end
+
   end
 
   def new
