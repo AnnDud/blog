@@ -22,7 +22,8 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    @comment = Comment.new(article: @article)
+    @comment = Comment.new(commenter: session[:commenter])
+
   end
 
   def destroy
