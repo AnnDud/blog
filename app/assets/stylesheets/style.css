@@ -1,0 +1,14 @@
+a {
+	text-decoration: none;
+	color: #15D318;
+}
+
+a.dangerous {
+	color: red
+
+}
+a.distraction {
+	color: yellow
+}
+
+body{ background: #bcc5d6 }
