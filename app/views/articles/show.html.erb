@@ -12,6 +12,12 @@
 
 </p>
 
+<p>
+  <strong>Author:</strong>
+  <%= @article.user.email %>
+
+</p>
+
 <h2>Comments</h2>
 <%= render @article.comments.order(created_at: :desc) %>
 
